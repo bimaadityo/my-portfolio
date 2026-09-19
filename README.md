@@ -1,162 +1,29 @@
-# Personal Portfolio – Fullstack Developer
+# Bima Adityo Kurniawan — portfolio
 
-This repository contains the source code for my personal portfolio website. The purpose of this project is to present my professional experience, technical expertise, and selected engineering projects in a structured and production-grade manner.
+A concise, static Next.js App Router portfolio with TypeScript, Tailwind CSS, shadcn/ui primitives, Radix dropdown behavior, Lucide icons, and the official shadcn `next-themes` integration.
 
-The portfolio is intentionally designed to reflect clarity, engineering depth, and architectural thinking rather than visual excess. It emphasizes real-world experience in fullstack development, cloud-native systems, and AI-integrated applications.
+## Development
 
----
+Node.js 20.9 or newer. Run `npm ci`, `npm run dev`. Run `npm run build` for static output in `out/`, and `npm run typecheck` for TypeScript verification. The lockfile records exact installed versions. Deploy `out/` to a static host; the source also runs as a standard Next.js project. No runtime server or credentials are required for Phase 1.
 
-## Overview
+Set `SITE_URL` before building when changing domains. It controls the canonical, Open Graph URLs, Person/WebSite JSON-LD, sitemap, and robots. The current URL is the registered preview origin. Private preview access prevents public search indexing until the deployment is deliberately made public.
 
-This portfolio is built using modern React ecosystem tools with a focus on scalability, maintainability, and clean component architecture.
+## Content and Phase 2 boundary
 
-It highlights:
+`src/content/portfolio.ts` owns plain typed profile, social, experience, education, certification, project, skill, and publication data. Stable IDs provide identity; array order controls display. `src/app/page.tsx` renders these records as a Server Component. Source attribution is recorded in `CONTENT_SOURCES.md`.
 
-* Professional work experience
-* Selected engineering projects
-* Technical skill categorization
-* Cloud and AI exposure
-* Clean responsive UI design
+For Phase 2, replace the static import with a server-side content reader that returns the same `Portfolio` shape. Filter published records and apply ordering in that reader. The existing presentation can remain intact. Articles, media administration, CRUD, authentication, database schemas, API routes, and admin interfaces are deliberately not implemented. The Phase 1 experience, education, certification, project, skill, and publication records are plain data so they can later be read from a database or API without changing the page structure. Add publishing fields and other domain types when their requirements are known; no speculative repository abstraction exists.
 
-The design system uses a professional blue accent theme and supports both light and dark modes via global theme switching.
+The page remains static. Only the theme provider and header dropdowns require client execution. Theme preferences use `next-themes`, default to system, and persist between visits. Radix handles keyboard focus and menu behavior. Native anchors handle navigation and contact links. Project context and experience details use native `details`/`summary`, so they support keyboard interaction and work without client JavaScript. All content is included in the static HTML.
 
----
+## Design and assets
 
-## Tech Stack
+A cobalt and ink-blue palette, compact monogram, asymmetric introduction, numbered section rail, featured case study, and expandable work history give the page an editorial structure. Projects appear before the biography and experience so the work is easy to find. Light and dark modes share semantic CSS tokens.
 
-**Frontend Framework**
+Geist and Geist Mono are self-hosted with `next/font/local`; their Latin WOFF2 files and SIL Open Font License are included in `src/app/fonts`. Builds and visitors do not need to contact a font service. Bima’s real portrait comes from the public EnergyMate repository, with its source recorded in `CONTENT_SOURCES.md`. The image has explicit dimensions and descriptive alt text. The existing social-preview graphic is preserved.
 
-* Next.js (App Router)
-* React with TypeScript
+Motion is CSS-only: a short hero entrance, link feedback, and a brief reveal when details open. No animation package, scroll listener, or always-running animation is used. Reduced-motion preferences disable movement and smooth scrolling. Content remains visible when animation is unavailable.
 
-**Styling**
+## SEO and accessibility
 
-* Tailwind CSS
-* Mantine UI (components only, no shadcn)
-
-**Architecture Principles**
-
-* Component-driven structure
-* Responsive-first layout
-* Minimal abstraction
-* Clean semantic HTML
-* Accessible UI patterns
-
-The page is intentionally structured as a single cohesive portfolio view, with section-based composition rather than multi-route navigation.
-
----
-
-## Features
-
-* Fully responsive layout
-* Light/Dark theme compatibility
-* Professional blue accent design
-* Smooth scroll navigation
-* Structured work experience timeline
-* Project showcase grid
-* Categorized technical skills
-* Clean contact section
-
-No unnecessary animation layers or excessive abstraction are included. The goal is maintainability and clarity.
-
----
-
-## Installation & Development
-
-Clone the repository:
-
-```bash
-git clone https://github.com/your-username/your-portfolio.git
-cd your-portfolio
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run development server:
-
-```bash
-npm run dev
-```
-
-Open:
-
-```
-http://localhost:3000
-```
-
----
-
-## Build & Production
-
-To create a production build:
-
-```bash
-npm run build
-npm start
-```
-
----
-
-## Design Philosophy
-
-This portfolio is intentionally minimal and structured around professional credibility rather than aesthetic experimentation. The emphasis is on:
-
-* Engineering maturity
-* Practical experience
-* Scalable system thinking
-* Clean UI implementation
-* Technical clarity
-
-The visual hierarchy reflects how recruiters and technical leads evaluate engineers: experience first, projects second, skills third.
-
----
-
-## Deployment
-
-The project can be deployed easily using:
-
-* Vercel (recommended for Next.js)
-* Netlify
-* Docker container (optional extension)
-
-If deployed on Vercel:
-
-```bash
-vercel deploy
-```
-
----
-
-## Future Improvements
-
-Planned enhancements may include:
-
-* Blog section for technical writing
-* Dynamic project data via CMS or Markdown
-* Performance benchmarking page
-* AI-related project deep dives
-* Lighthouse optimization reporting
-
----
-
-## License
-
-This project is open for reference and inspiration. Please do not directly copy personal branding content without modification.
-
----
-
-## Contact
-
-If you would like to connect professionally:
-
-* LinkedIn: [https://www.linkedin.com/in/bimaadityokurniawan](https://www.linkedin.com/in/bimaadityokurniawan)
-* GitHub: [https://github.com/bimaadityo](https://github.com/bimaadityo)
-* Email: [bimaadityokurniawan@gmail.com](mailto:bimaadityokurniawan@gmail.com)
-
----
-
-If you want, I can also produce a more advanced README that frames you strategically as an AI-focused Fullstack Engineer rather than a general Fullstack Developer, which may position you more strongly for senior or AI-adjacent roles.
+Semantic sections, one h1, descriptive links, skip navigation, focus outlines, reduced-motion support, mobile navigation, canonical/OG/Twitter metadata, static robots and sitemap, Person/WebSite/ScholarlyArticle JSON-LD, 404 page, and social image. The private preview cannot demonstrate real-world Core Web Vitals; those require field data from a public deployment.
