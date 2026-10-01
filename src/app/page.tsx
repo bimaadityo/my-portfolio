@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, ArrowUpRight, BookOpen, BriefcaseBusiness, GitFork,
 import { HeaderControls } from '@/components/header-controls';
 import { Button } from '@/components/ui/button';
 import { navigation } from '@/content/navigation';
-import { portfolio } from '@/content/portfolio';
+import { portfolio, type Project } from '@/content/portfolio';
 import { siteUrl } from '@/lib/site';
 
 const socialIcons = { github: GitFork, linkedin: BriefcaseBusiness };
@@ -20,9 +20,39 @@ function SectionLabel({ number, children }: { number: string; children: ReactNod
   );
 }
 
+function ProjectRow({ project, index }: { project: Project; index: number }) {
+  return (
+    <article className="project-row">
+      <span className="project-index" aria-hidden="true">{String(index).padStart(2, '0')}</span>
+      <div className="project-content">
+        <p className="eyebrow mb-2 text-muted-foreground">{project.category}</p>
+        <h3 className="text-2xl font-medium tracking-tight">{project.name}</h3>
+        <p className="mt-3 text-base leading-7 text-muted-foreground">{project.description}</p>
+        <ul aria-label={`${project.name} technologies`} className="technology-list mt-4 text-muted-foreground">
+          {project.technologies.map(technology => <li key={technology}>{technology}</li>)}
+        </ul>
+        <details className="project-details">
+          <summary>Contribution & context<Plus className="expand-icon" aria-hidden="true" /></summary>
+          <div>
+            <p><span className="font-medium text-foreground">My contribution. </span>{project.contribution}</p>
+            <p><span className="font-medium text-foreground">Why it matters. </span>{project.significance}</p>
+          </div>
+        </details>
+        {project.links.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-x-6">
+            {project.links.map(link => <a key={link.id} href={link.url} className="text-link">{link.label}<ArrowUpRight /></a>)}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export default function Home() {
   const { profile, socials, experiences, education, certifications, projects, skills, publications } = portfolio;
-  const [featuredProject, ...otherProjects] = projects;
+  const professionalProjects = projects.filter(project => project.kind === 'Professional');
+  const learningProjects = projects.filter(project => project.kind !== 'Professional');
+  const [featuredProject, ...otherProfessionalProjects] = professionalProjects;
   const nameParts = profile.name.split(' ');
   const structuredData = {
     '@context': 'https://schema.org',
@@ -64,7 +94,7 @@ export default function Home() {
             <div className="hidden items-center border-l border-border pl-3 xl:flex">
               {socials.map(social => {
                 const Icon = socialIcons[social.id as keyof typeof socialIcons];
-                return <a key={social.id} href={social.url} className="icon-link" aria-label={social.label}><Icon className="size-4" /></a>;
+                return <a key={social.id} href={social.url} className="icon-link" aria-label={social.label} target="_blank" rel="noopener noreferrer"><Icon className="size-4" /></a>;
               })}
             </div>
             <HeaderControls />
@@ -88,7 +118,7 @@ export default function Home() {
               <div className="hero-actions">
                 <Button asChild><a href="#projects">View projects<ArrowDown /></a></Button>
                 <Button variant="outline" asChild><a href={socials[0].url}><GitFork />GitHub</a></Button>
-                <a className="text-link px-2" href={socials[1].url}>LinkedIn<ArrowUpRight /></a>
+                <a className="text-link px-2" href={socials[1].url} target="_blank" rel="noopener noreferrer">LinkedIn<ArrowUpRight /></a>
               </div>
             </div>
 
@@ -122,7 +152,7 @@ export default function Home() {
             <div className="section-body">
               <div className="section-heading">
                 <h2 id="projects-title" className="section-title">Interfaces. Systems.<br />Real applications.</h2>
-                <a href={socials[0].url} className="text-link">All repositories<ArrowUpRight /></a>
+                <a href={socials[0].url} className="text-link" target="_blank" rel="noopener noreferrer">All repositories<ArrowUpRight /></a>
               </div>
 
               {featuredProject && (
@@ -134,7 +164,7 @@ export default function Home() {
                   <div className="project-feature-body">
                     <p className="eyebrow mb-3">{featuredProject.category}</p>
                     <h3 id="featured-project-title" className="project-title">
-                      <a href={featuredProject.links[0].url}>{featuredProject.name}</a>
+                      {featuredProject.links[0] ? <a href={featuredProject.links[0].url} target="_blank" rel="noopener noreferrer">{featuredProject.name}</a> : featuredProject.name}
                     </h3>
                     <p className="mt-4 max-w-2xl text-lg leading-8 text-ink-muted">{featuredProject.description}</p>
                     <dl className="project-meta">
@@ -144,36 +174,26 @@ export default function Home() {
                     <ul aria-label={`${featuredProject.name} technologies`} className="technology-list mt-6 text-ink-muted">
                       {featuredProject.technologies.map(technology => <li key={technology}>{technology}</li>)}
                     </ul>
-                    <div className="mt-5 flex flex-wrap gap-x-6">
-                      {featuredProject.links.map(link => <a key={link.id} href={link.url} className="text-link">{link.label}<ArrowUpRight /></a>)}
-                    </div>
+                    {featuredProject.links.length > 0 && (
+                      <div className="mt-5 flex flex-wrap gap-x-6">
+                        {featuredProject.links.map(link => <a key={link.id} href={link.url} className="text-link" target="_blank" rel="noopener noreferrer">{link.label}<ArrowUpRight /></a>)}
+                      </div>
+                    )}
                   </div>
                 </article>
               )}
 
-              {otherProjects.map((project, index) => (
-                <article key={project.id} className="project-row">
-                  <span className="project-index" aria-hidden="true">{String(index + 2).padStart(2, '0')}</span>
-                  <div className="project-content">
-                    <p className="eyebrow mb-2 text-muted-foreground">{project.category}</p>
-                    <h3 className="text-2xl font-medium tracking-tight">{project.name}</h3>
-                    <p className="mt-3 text-base leading-7 text-muted-foreground">{project.description}</p>
-                    <ul aria-label={`${project.name} technologies`} className="technology-list mt-4 text-muted-foreground">
-                      {project.technologies.map(technology => <li key={technology}>{technology}</li>)}
-                    </ul>
-                    <details className="project-details">
-                      <summary>Contribution & context<Plus className="expand-icon" aria-hidden="true" /></summary>
-                      <div>
-                        <p><span className="font-medium text-foreground">My contribution. </span>{project.contribution}</p>
-                        <p><span className="font-medium text-foreground">Why it matters. </span>{project.significance}</p>
-                      </div>
-                    </details>
-                    <div className="mt-2 flex flex-wrap gap-x-6">
-                      {project.links.map(link => <a key={link.id} href={link.url} className="text-link">{link.label}<ArrowUpRight /></a>)}
-                    </div>
+              {otherProfessionalProjects.map((project, index) => <ProjectRow key={project.id} project={project} index={index + 2} />)}
+
+              {learningProjects.length > 0 && (
+                <div className="mt-14">
+                  <p className="eyebrow text-primary">Capstone & personal projects</p>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">Built through the Bangkit and Laskar AI programs, university research, and personal work, outside professional roles.</p>
+                  <div className="mt-4 border-t border-border">
+                    {learningProjects.map((project, index) => <ProjectRow key={project.id} project={project} index={index + 1} />)}
                   </div>
-                </article>
-              ))}
+                </div>
+              )}
             </div>
           </section>
 
@@ -251,6 +271,12 @@ export default function Home() {
                       <h3 className="text-lg leading-7 font-medium">{item.degree}</h3>
                       <p className="mt-2 text-base leading-7 text-muted-foreground">{item.institution}</p>
                       <p className="mt-3 font-mono text-xs leading-6 text-muted-foreground">{item.period}</p>
+                      {item.coursework && (
+                        <div className="mt-4">
+                          <p className="eyebrow mb-2 text-muted-foreground">Relevant coursework</p>
+                          <p className="text-sm leading-6 text-muted-foreground">{item.coursework.join(' / ')}</p>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -282,8 +308,8 @@ export default function Home() {
                     <p className="mt-4 text-base leading-7 text-muted-foreground">{publication.summary}</p>
                     <p className="mt-5 font-mono text-xs leading-6 text-muted-foreground">{publication.journal}<br />{publication.citation}</p>
                     <div className="mt-5 flex flex-wrap gap-x-6">
-                      <a href={publication.url} className="text-link">Read on ResearchGate<ArrowUpRight /></a>
-                      <a href={`https://doi.org/${publication.doi}`} className="text-link">View DOI<ArrowUpRight /></a>
+                      <a href={publication.url} className="text-link" target="_blank" rel="noopener noreferrer">Read on ResearchGate<ArrowUpRight /></a>
+                      <a href={`https://doi.org/${publication.doi}`} className="text-link" target="_blank" rel="noopener noreferrer">View DOI<ArrowUpRight /></a>
                     </div>
                   </div>
                 </article>
@@ -300,8 +326,8 @@ export default function Home() {
                   <p className="mt-3 max-w-sm text-base leading-7 text-muted-foreground">Have a project to discuss or an engineering question? Let’s connect.</p>
                 </div>
                 <div className="flex shrink-0 flex-col gap-2">
-                  <Button asChild className="rounded-sm"><a href={socials[1].url}>Connect on LinkedIn<ArrowUpRight /></a></Button>
-                  <a href={socials[0].url} className="text-link justify-center"><GitFork />Explore my GitHub</a>
+                  <Button asChild className="rounded-sm"><a href={socials[1].url} target="_blank" rel="noopener noreferrer">Connect on LinkedIn<ArrowUpRight /></a></Button>
+                  <a href={socials[0].url} className="text-link justify-center" target="_blank" rel="noopener noreferrer"><GitFork />Explore my GitHub</a>
                 </div>
               </div>
             </div>
@@ -313,7 +339,7 @@ export default function Home() {
         <div className="page-width flex flex-col justify-between gap-4 py-6 sm:flex-row sm:items-center">
           <p className="font-mono text-xs leading-6 text-muted-foreground">© {new Date().getFullYear()} {profile.name}</p>
           <div className="flex flex-wrap items-center gap-5">
-            {socials.map(social => <a key={social.id} href={social.url} className="text-link">{social.label}</a>)}
+            {socials.map(social => <a key={social.id} href={social.url} className="text-link" target="_blank" rel="noopener noreferrer">{social.label}</a>)}
             <a className="text-link" href="#home">Back to top<ArrowUp /></a>
           </div>
         </div>
