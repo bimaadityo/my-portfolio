@@ -3,24 +3,24 @@
  * Only source-verified claims belong here. See CONTENT_SOURCES.md.
  */
 export type SocialLink = { id: string; label: string; url: string };
-export type Project = { id: string; name: string; category: string; description: string; contribution: string; significance: string; technologies: string[]; links: SocialLink[] };
+export type Project = { id: string; kind: 'Professional' | 'Capstone' | 'Personal'; name: string; category: string; description: string; contribution: string; significance: string; technologies: string[]; links: SocialLink[] };
 export type SkillGroup = { id: string; name: string; technologies: string[]; context: string };
 export type Publication = { id: string; title: string; year: number; journal: string; citation: string; authors: string[]; summary: string; url: string; doi: string };
 export type Experience = { id: string; category: 'Professional' | 'Training' | 'Leadership & teaching'; company: string; role: string; period: string; location?: string; summary: string; contributions: string[] };
-export type Education = { id: string; institution: string; degree: string; period: string };
+export type Education = { id: string; institution: string; degree: string; period: string; coursework?: string[] };
 export type Certification = { id: string; name: string };
 export type Portfolio = { profile: { name: string; shortName: string; role: string; description: string; portrait: { src: string; alt: string; width: number; height: number }; about: string[]; focus: { title: string; description: string }[] }; socials: SocialLink[]; experiences: Experience[]; education: Education[]; certifications: Certification[]; projects: Project[]; skills: SkillGroup[]; publications: Publication[] };
 
 const researchUrl = 'https://www.researchgate.net/publication/370785730_Rancang_Bangun_Aplikasi_Quest_Board_Untuk_Masyarakat_Menggunakan_Metode_Devops_Berbasis_Android';
 export const portfolio: Portfolio = {
   profile: {
-    name: 'Bima Adityo Kurniawan', shortName: 'Bima Adityo', role: 'Full-Stack Developer',
+    name: 'Bima Adityo Kurniawan', shortName: 'Bima Adityo Kurniawan', role: 'Full-Stack Developer',
     portrait: { src: '/images/bima-adityo.jpeg', alt: 'Bima Adityo Kurniawan wearing a dark suit and blue tie', width: 800, height: 800 },
     description: 'A software engineering leader and full-stack developer focused on reliable web systems from architecture to deployment.',
     focus: [{ title: 'Web systems', description: 'Interfaces, APIs, databases, and production delivery.' }, { title: 'Engineering leadership', description: 'Architecture, standards, documentation, and technical direction.' }, { title: 'Applied software', description: 'Operational tools, AI-assisted systems, and mobile applications.' }],
     about: [
       'I’m Bima, a software engineering leader and full-stack developer based in Kota Bogor, Jawa Barat. I work across system architecture, APIs, databases, responsive interfaces, and production operations.',
-      'At PT EbyB Global Marketplace, I lead engineering direction across production and internal applications. Earlier, at PT. Eksa Digital Agency, I built HR, leave, KPI, CRM, ATS, and website-performance systems with React, Express, and MySQL.',
+      'At PT EbyB Global Marketplace, I lead engineering direction across production and internal applications. Earlier, at PT. Eksa Digital Agency, I built HR, leave, KPI, CRM, ATS, and website-performance systems with React, Laravel, Express, and MySQL.',
       'I’m particularly interested in software architecture, engineering leadership, applied AI, mobile delivery, and turning complex operational requirements into maintainable systems.'
     ]
   },
@@ -43,10 +43,10 @@ export const portfolio: Portfolio = {
     contributions: ['Handled platform-specific optimization for production performance and reliability.', 'Owned company registration, developer accounts, certificates, signing, testing, store compliance, review feedback, and production publishing across Apple App Store Connect and Google Play Console.']
   }, {
     id: 'eksa-fullstack', category: 'Professional', company: 'PT. Eksa Digital Agency', role: 'Fullstack Developer', period: 'April 2025 — April 2026', location: 'Surabaya, Indonesia',
-    summary: 'Built internal business systems and data workflows with React, Express, and MySQL, with CI/CD on Plesk.',
-    contributions: ['Migrated two years of marketing sales-point records to a normalized 3NF schema, then cleaned and visualized the data for management analytics.', 'Managed sensitive internal data with storage, security, and audit-log tracking.', 'Built an HR Employee Management System synchronized with facial-recognition attendance for more than 200 employees.', 'Digitalized employee leave management and built a KPI Performance and Analytics Dashboard for ten divisions with different scoring systems.', 'Created a CRM handling more than 10,000 client records, tickets, and websites.', 'Built an automated website-performance system using the Google Lighthouse API to check more than 10,000 websites daily before 7:30 AM.', 'Created an Applicant Tracking System for recording and evaluating recruitment, including applicant demographic graphs and analytics.', 'Automated deployment with CI/CD on Plesk and wrote documentation for every commit and pull request.']
+    summary: 'Built internal business systems and data workflows with React, Laravel, Express, and MySQL, with CI/CD on Plesk.',
+    contributions: ['Migrated two years of marketing sales-point records to a normalized 3NF schema, then cleaned and visualized the data for management analytics.', 'Managed sensitive internal data with storage, security, and audit-log tracking.', 'Built an HR Employee Management System synchronized with facial-recognition attendance for more than 200 employees.', 'Digitalized employee leave management and built a KPI Performance and Analytics Dashboard for ten divisions with different scoring systems, historical performance tracking, management dashboards, and AI-assisted analytics.', 'Created a CRM handling more than 10,000 client records, tickets, and websites.', 'Built an automated website-performance system using the Google Lighthouse API to check more than 10,000 websites daily before 7:30 AM.', 'Created an Applicant Tracking System for recording and evaluating recruitment, including applicant demographic graphs and analytics.', 'Automated deployment with CI/CD on Plesk and wrote documentation for every commit and pull request.']
   }, {
-    id: 'laskar-ai', category: 'Training', company: 'Laskar AI', role: 'AI Engineer Apprentice', period: 'January 2025 — June 2025', location: 'Jakarta, Indonesia',
+    id: 'laskar-ai', category: 'Training', company: 'Laskar AI', role: 'AI Engineer Apprentice', period: 'February 2025 — July 2026', location: 'Jakarta, Indonesia',
     summary: 'Developed and deployed AI-driven solutions through machine learning, cloud computing, and data science in a collaboration program between NVIDIA, Lintasarta, and Dicoding.',
     contributions: ['Worked with Python, deep learning frameworks, and data visualization to build and optimize AI models for real-world challenges.', 'Designed scalable AI systems with a focus on efficiency and business impact.']
   }, {
@@ -54,7 +54,7 @@ export const portfolio: Portfolio = {
     summary: 'Built websites and web applications from custom HTML, CSS, and JavaScript through Next.js, Express, and Linux VPS deployment.',
     contributions: ['Moved from custom client websites to maintainable, performant, SEO-aware company profiles with Next.js.', 'Contributed to administrative dashboards, backend services, and server deployment and maintenance on Linux-based VPS environments.', 'Collaborated with team members and clients throughout delivery to produce responsive, reliable, business-focused solutions.']
   }, {
-    id: 'dicoding-distinction', category: 'Training', company: 'Dicoding Indonesia', role: 'Front-End Web & Back-End Developer — Distinction Graduate', period: 'July 2024 — December 2024',
+    id: 'dicoding-distinction', category: 'Training', company: 'Dicoding Indonesia', role: 'Front-End Web & Back-End Developer — Distinction Graduate', period: 'August 2024 — December 2024',
     summary: 'Completed a web-development bootcamp with distinction across front-end, back-end, and framework fundamentals.',
     contributions: ['Worked with HTML, CSS, JavaScript, Node.js, and web frameworks through hands-on projects.', 'Appointed as a study tutor, simplifying complex concepts, running additional sessions, and mentoring peers through completion of the bootcamp.']
   }, {
@@ -73,25 +73,53 @@ export const portfolio: Portfolio = {
     id: 'algorithm-data-structures-lab', category: 'Leadership & teaching', company: 'Universitas Jenderal Soedirman', role: 'Head Assistant of Algorithm and Data Structures Lab', period: 'April 2022 — September 2022', location: 'Purbalingga, Indonesia',
     summary: 'Taught fundamental programming, object-oriented programming, algorithms, and data structures with a university lecturer.',
     contributions: ['Created the department’s first Python learning module and helped write C++ and Python programming quizzes and final exams.']
+  }, {
+    id: 'bangkit-cloud', category: 'Training', company: 'Bangkit Academy — led by Google, GoTo (Gojek), Tokopedia, and Traveloka', role: 'Cloud Computing Cohort', period: 'February 2021 — July 2021',
+    summary: 'Completed the Cloud Computing learning path of Bangkit, a Kampus Merdeka career-readiness program for Indonesian university students, built by Google with Gojek, Tokopedia, and Traveloka.',
+    contributions: ['Studied cloud architecture, back-end application development, and deployment on Google Cloud Platform, the curriculum that prepares participants for the Google Associate Cloud Engineer exam.', 'Trained alongside the Machine Learning and Mobile Development paths, with a capstone in which students from all three paths build a product together.', 'Capstone project: IzinBoss, an employee leave-management Android application.']
   }],
-  education: [{ id: 'unsoed-electrical-engineering', institution: 'Universitas Jenderal Soedirman', degree: 'Bachelor of Engineering (BE), Electrical Engineering', period: 'September 2020 — March 2024' }],
-  certifications: [{ id: 'machine-learning-terapan', name: 'Machine Learning Terapan' }, { id: 'google-it-support', name: 'Google IT Support Specialization' }, { id: 'frontend-expert', name: 'Menjadi Front-End Web Developer Expert' }],
+  education: [{ id: 'unsoed-electrical-engineering', institution: 'Universitas Jenderal Soedirman', degree: 'Bachelor of Engineering (BE), Electrical Engineering', period: 'September 2020 — March 2024', coursework: ['Programming Fundamentals', 'Algorithm & Data Structures', 'Software Engineering', 'Object-Oriented Programming'] }],
+  certifications: [{ id: 'machine-learning-terapan', name: 'Machine Learning Terapan (Dicoding)' }, { id: 'google-it-support', name: 'Google IT Support Specialization (Coursera)' }, { id: 'frontend-expert', name: 'Front-End Web Developer Expert (Dicoding)' }],
   projects: [{
-    id: 'energymate', name: 'EnergyMate', category: 'Web application · Frontend developer',
+    id: 'agen-ebyb', kind: 'Professional', name: 'Agen EbyB', category: 'Web application · Closed source',
+    description: 'A promotional website with an agent dashboard, built to streamline agency operations with real-time data tracking, lead management tools, and promotional assets.',
+    contribution: 'Developed the website and its dashboard functionality for agents at PT EbyB Global Marketplace using Next.js.',
+    significance: 'Gives agents one place to track real-time data, manage leads, and use promotional assets. The source is closed, so no repository is linked.',
+    technologies: ['Next.js', 'Mantine', 'shadcn/ui'], links: []
+  }, {
+    id: 'eksa-crm', kind: 'Professional', name: 'CRM — PT Eksa Digital Agency', category: 'Web application · Closed source',
+    description: 'A CRM for managing leads, clients, sales pipelines, and communication history.',
+    contribution: 'Built the closed-source CRM with React and Go, including automated follow-ups and reporting.',
+    significance: 'Centralizes customer data, including 10,000+ client records, to improve client relationship visibility, retention, and sales workflow efficiency.',
+    technologies: ['React', 'Go'], links: []
+  }, {
+    id: 'eksa-kpi', kind: 'Professional', name: 'KPI System — PT Eksa Digital Agency', category: 'Web application · Closed source',
+    description: 'A KPI management system for defining, tracking, and evaluating employee and team performance metrics.',
+    contribution: 'Developed the closed-source system with React and Express, covering goal setting, real-time progress monitoring, scoring, and automated reporting.',
+    significance: 'Helps management make data-driven decisions and align individual targets with agency objectives across ten departments.',
+    technologies: ['React', 'Express'], links: []
+  }, {
+    id: 'eksa-hris', kind: 'Professional', name: 'HRIS — PT Eksa Digital Agency', category: 'Web application · Closed source',
+    description: 'A human resource information system that centralizes employee records, attendance, leave, payroll, and HR reporting.',
+    contribution: 'Developed the closed-source HRIS with React and Laravel, automating manual HR workflows and implementing role-based access.',
+    significance: 'Improves data accuracy and operational efficiency for daily agency operations, serving 200+ employees.',
+    technologies: ['React', 'Laravel'], links: []
+  }, {
+    id: 'energymate', kind: 'Capstone', name: 'EnergyMate', category: 'Web application · Laskar AI 2025 capstone',
     description: 'A household energy prediction app with appliance-based estimates, visualizations, and an interactive energy-advice chatbot.',
     contribution: 'Frontend developer on the team: built the React and TypeScript application with prediction and chatbot interfaces connected to REST APIs.',
     significance: 'Turns appliance usage inputs into understandable estimates and recommendations, helping users reason about their electricity consumption.',
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Flask API'],
     links: [{ id: 'repository', label: 'View repository', url: 'https://github.com/bimaadityo/EnergyMate' }, { id: 'demo', label: 'Visit demo', url: 'https://energymate.netlify.app' }]
   }, {
-    id: 'izinboss', name: 'IzinBoss', category: 'Android application · Leave management',
+    id: 'izinboss', kind: 'Capstone', name: 'IzinBoss', category: 'Android application · Bangkit 2021 capstone · Leave management',
     description: 'An employee leave-management application with request submission, manager review, and status updates.',
     contribution: 'Reworked the Android application around MVVM, separating views, view models, and repositories for company, user, and leave-request data.',
     significance: 'Connects employee and manager workflows through Firebase Authentication and Cloud Firestore. The repository includes end-to-end UI tests for core flows.',
     technologies: ['Kotlin', 'MVVM', 'Firebase Auth', 'Cloud Firestore'],
     links: [{ id: 'repository', label: 'View repository', url: 'https://github.com/bimaadityo/IzinBoss-v2' }]
   }, {
-    id: 'kota-quest', name: 'Kota Quest', category: 'Android application · Research project',
+    id: 'kota-quest', kind: 'Personal', name: 'Kota Quest', category: 'Android application · Research project',
     description: 'A community quest board where people can post requests for help and others can take them on. Built around the Indonesian tradition of gotong royong.',
     contribution: 'First author of the paper documenting the application’s design, implementation, and DevOps development process.',
     significance: 'Brings posting, accepting, and reporting community tasks into one mobile workflow, with shared state stored in Cloud Firestore.',
@@ -100,8 +128,8 @@ export const portfolio: Portfolio = {
   }],
   skills: [
     { id: 'frontend', name: 'Frontend', technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'], context: 'Web interfaces and applications' },
-    { id: 'backend', name: 'Backend', technologies: ['Node.js', 'Express', 'Go', 'Flask', 'REST APIs'], context: 'Server-side development' },
-    { id: 'database', name: 'Databases', technologies: ['MySQL', 'PostgreSQL', 'MongoDB', 'Cloud Firestore'], context: 'Relational and document data' },
+    { id: 'backend', name: 'Backend', technologies: ['Node.js', 'Express', 'Laravel', 'Go', 'FastAPI', 'REST APIs'], context: 'Server-side development' },
+    { id: 'database', name: 'Databases', technologies: ['MySQL', 'MariaDB', 'PostgreSQL', 'MongoDB', 'Cloud Firestore'], context: 'Relational and document data' },
     { id: 'devops', name: 'DevOps & tooling', technologies: ['GitHub', 'CI/CD', 'Docker', 'Vite', 'Gradle'], context: 'Source control, builds, and development' },
     { id: 'mobile-ml', name: 'Mobile & ML', technologies: ['Kotlin', 'Swift', 'Flutter', 'Python', 'TensorFlow'], context: 'Additional areas of development' },
     { id: 'engineering-practice', name: 'Engineering practice', technologies: ['Technical leadership', 'System architecture', 'Technical documentation'], context: 'Direction, maintainability, and delivery' }
